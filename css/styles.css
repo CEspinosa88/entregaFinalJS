@@ -1,0 +1,36 @@
+body {
+    background-color: rgb(196, 196, 196);
+}
+
+#contenedor, h1, h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ficha, .mostrarCarrito, .carrito {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2vh;
+  font-weight: bold;
+}
+
+.carrito, .botonAgregar {
+    padding: 3vh;
+    border-radius: 1rem;
+}
+.botonAgregar {
+    margin-top: 3vh;
+    background-color: rgb(166, 161, 161);
+    font-weight: bold;
+}
+img {
+  height: 45vh;
+  width: auto;
+  border-radius: 15px;
+}
+
+.nombre, .posicion {
+    font-size: 1.2em;
+}
