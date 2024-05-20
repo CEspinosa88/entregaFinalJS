@@ -16,15 +16,23 @@ body {
   font-weight: bold;
 }
 
-.carrito, .botonAgregar {
+ .botonAgregar {
     padding: 3vh;
     border-radius: 1rem;
-}
-.botonAgregar {
-    margin-top: 3vh;
-    background-color: rgb(166, 161, 161);
     font-weight: bold;
+    margin-top: 3vh;
+    background-color: rgb(221, 214, 215);
+
 }
+
+#carrito > button {
+    background-color: rgb(255, 252, 252);
+    padding: 3vh;
+    border-radius: 1rem;
+    font-weight: bold;
+    margin-top: 3vh;
+}
+
 img {
   height: 45vh;
   width: auto;
