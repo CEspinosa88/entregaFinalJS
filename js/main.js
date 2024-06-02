@@ -1,3 +1,16 @@
+fetch("./js/jugadores.json")
+.then(response => response.json())
+.then ((data) => {
+  data.forEach((el) => nuevaFicha(el, "contenedor"));
+})
+.catch ((error) => {
+  Swal.fire({
+    title: "ERROR",
+    text: "Base de datos no encontrada.",
+    icon: "error"
+  });
+})
+
 const contenedor = document.getElementById("contenedor");
 const carrito = document.getElementById("carrito");
 const mostrarCarrito = document.getElementById("mostrarCarrito");
@@ -10,23 +23,68 @@ desplegarCarrito.innerText = "Mostrar carrito";
 desplegarCarrito.onclick = () => desplegar(botonCarrito);
 
 function agregarJugador(id) {
-  const jugadorIncluido = jugadores.find((el) => el.id === id);
+  fetch("./js/jugadores.json")
+  .then(response => response.json())
+  .then ((data) => {
+  const jugadorIncluido = data.find((el) => el.id === id);
   if (arrayCarrito.some((elemento) => elemento.id === jugadorIncluido.id)) {
-    alert("Ya incluiste a este jugador. No puedes repetirlo");
+    Swal.fire({
+      icon: "error",
+      text: `Ya agregaste a ${jugadorIncluido.nombre}. No puedes repetirlo.`,
+    });
   } else {
     mostrarCarrito.innerHTML = "";
     arrayCarrito.push(jugadorIncluido);
     localStorage.setItem("arrayCarrito", JSON.stringify(arrayCarrito));
     arrayCarrito.forEach((el) => nuevaFicha(el, "mostrarCarrito"));
+    Toastify({
+      text: `${jugadorIncluido.nombre} agregado!`,
+      duration: 2000,
+      gravity: "bottom",
+      style: {
+        background: "#00ad37",
+        color: "white",
+      },
+    }).showToast();
   }
+});
 }
 
 function quitar(id) {
+  const jugadorQuitado = arrayCarrito.find((el) => el.id === id);
   mostrarCarrito.innerHTML = "";
-  let nuevoCarrito = arrayCarrito.filter((el) => el.id !== id);
-  localStorage.setItem("arrayCarrito", JSON.stringify(nuevoCarrito));
-  arrayCarrito = nuevoCarrito;
-  arrayCarrito.forEach((el) => nuevaFicha(el, "mostrarCarrito"));
+
+  Swal.fire({
+    title: `Estás seguro de que quieres eliminar a ${jugadorQuitado.nombre}?`,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#de4b5a",
+    cancelButtonColor: "#00ad37",
+    confirmButtonText: "Si",
+    cancelButtonText: "No",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      let nuevoCarrito = arrayCarrito.filter((el) => el.id !== id);
+      localStorage.setItem("arrayCarrito", JSON.stringify(nuevoCarrito));
+      arrayCarrito = nuevoCarrito;
+      arrayCarrito.forEach((el) => nuevaFicha(el, "mostrarCarrito"));
+      Swal.fire({
+        title: `${jugadorQuitado.nombre} ha sido eliminado.`,
+        icon: "success",
+      });
+      Toastify({
+        text: `${jugadorQuitado.nombre} eliminado!`,
+        duration: 2000,
+        gravity: "bottom",
+        style: {
+          background: "#de4b5a",
+          color: "white",
+        },
+      }).showToast();
+    } else {
+      Swal.fire(`No eliminaste a ${jugadorQuitado.nombre}`);
+    }
+  });
 }
 
 function nuevaFicha(jugador, container) {
@@ -79,7 +137,14 @@ function desplegar(estatus) {
   }
 }
 
-jugadores.forEach((el) => nuevaFicha(el, "contenedor"));
+
 arrayCarrito.forEach((el) => nuevaFicha(el, "mostrarCarrito"));
 
 carrito.appendChild(desplegarCarrito);
+
+// setTimeout( () => {
+//   Swal.fire({
+//     title: "Sigues ahí??",
+//     icon: "question"
+//   });
+// }, 20000)

@@ -4,16 +4,21 @@ body {
 
 #contenedor, h1, h2 {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.ficha, .mostrarCarrito, .carrito {
+.ficha, .carrito {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2vh;
   font-weight: bold;
+}
+
+.ficha > p {
+  margin: 1vh;
 }
 
  .botonAgregar {
@@ -41,4 +46,13 @@ img {
 
 .nombre, .posicion {
     font-size: 1.2em;
+}
+
+#mostrarCarrito {
+  display: flex;
+  align-items: center;
+  padding: 2vh;
+  font-weight: bold;
+  flex-wrap: wrap;
+  justify-content: center;
 }
