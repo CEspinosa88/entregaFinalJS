@@ -141,10 +141,3 @@ function desplegar(estatus) {
 arrayCarrito.forEach((el) => nuevaFicha(el, "mostrarCarrito"));
 
 carrito.appendChild(desplegarCarrito);
-
-// setTimeout( () => {
-//   Swal.fire({
-//     title: "Sigues ahí??",
-//     icon: "question"
-//   });
-// }, 20000)
